@@ -30,8 +30,14 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
     });
     
 // Serve static files from both the frontend and backend directories
-app.use(express.static(path.join(__dirname, 'frontend')));
+app.use(express.static(path.join(__dirname, '../frontend')));
+// app.use(express.static('/usr/src/frontend'));
 app.use('/backend', express.static(path.join(__dirname, 'backend')));
+
+// Define a route for the root URL
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/index.html'));
+  });
 
 app.get('/api/count', async (req, res) => {
     const document = await Counter.findById('mainCounter');
